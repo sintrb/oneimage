@@ -1,7 +1,7 @@
 # oneimage
 A simple python lib to create poster image with define data.
 
-Install oneprint
+Install oneimage
 ===============
 ```
  pip install oneimage
@@ -24,3 +24,9 @@ from oneimage import create_image
 img = create_image(data=data)
 img.show()
 ```
+
+The result:
+
+![t2](https://ishop-static-qn.inruan.com/FsDYOxiF-yGvUggD0qg8QSWwlQWk.PNG)
+
+[Click to view more information!](https://github.com/sintrb/oneimage)
