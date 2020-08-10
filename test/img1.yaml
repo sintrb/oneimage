@@ -1,0 +1,27 @@
+width: 1200
+height: 2000
+args:
+  - key: title
+    name: 标题
+    default: 花商保
+  - key: image
+    name: 图片
+    default: https://cdn-qn.huashangpay.cn/hsp/20200702/FkE9r0OnYTNpcy5DkYarSc8DAuXW.png
+  - key: code
+    name: 二维码
+    default: https://m.huashangpay.cn/utils/wxacode
+  - key: logo
+    name: 头像
+    default: https://cdn-qn.huashangpay.cn/hsp/20200702/FkE9r0OnYTNpcy5DkYarSc8DAuXW.png
+  - key: name
+    name: 用户昵称
+  - key: content
+    name: 内容
+elements:
+  - {type: image, url: $image, left: 187, top: 368, width: 820, height: 615, radius: 0, mode: fit}
+  - {type: image, url: 'https://cdn-qn.huashangpay.cn/hsp/20200808/FnrlNi_Qfd3g8A3hkWmL4A9B2gVw.png'}
+  - {type: text, font: 'https://cdn-qn.huaeb.com/ifarm/20200310/Fs15pNOwATX0jqslGddZbn5PZ0K_.otf', color: 'black', text: $title, align: left, size: 65, left: 160, width: 850, top: 1020, height: 80, vertical: center}
+  - {type: text, font: 'https://cdn-qn.huaeb.com/ifarm/20200305/WeiRuanYaHei-1.ttf', color: 'black', text: $content, align: left, size: 50, left: 160, width: 850, top: 1120, height: 190, vertical: top}
+  - {type: image, url: $code, left: 450, top: 1337, width: 300, height: 300}
+  - {type: image, url: $logo, left: 540, top: 170, width: 120, height: 120, radius: 60}
+  - {type: text, font: 'https://cdn-qn.huaeb.com/ifarm/20200305/WeiRuanYaHei-1.ttf', color: 'black', text: $name, align: center, left: 100, width: 1000, top: 300, size: 50, height: 60, vertical: center}
