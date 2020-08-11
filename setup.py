@@ -1,7 +1,7 @@
 from setuptools import setup
 import os, io
 
-from oneprint import __version__
+from oneimage import __version__
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = io.open(os.path.join(here, 'README.md'), encoding='UTF-8').read()

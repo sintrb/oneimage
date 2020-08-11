@@ -4,7 +4,7 @@ Created on 2020-08-10
 '''
 from __future__ import print_function
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 
 def _md5(s):
@@ -22,12 +22,13 @@ def get_cached_file(url):
     fn = url[url.rfind('/'):]
     if '.' in fn:
         suffix = fn[fn.rfind('.'):]
+        if '?' in suffix:
+            suffix = suffix[0:suffix.index('suffix')]
     else:
         suffix = ''
     filepath = os.path.join(cachepath, _md5(url) + suffix)
     if not os.path.exists(filepath):
         import requests
-        print('getting', url)
         content = requests.get(url).content
         with open(filepath, 'wb') as f:
             f.write(content)
@@ -171,10 +172,8 @@ def create_image(data, file_getter=None, debug=False):
             img.paste(im, (tl, tt), mask=mask)
         elif ele.get('type') == 'text':
             txtd = ele
-            try:
-                font = get_truetype_font_with_size(txtd['font'], txtd['size'])
-            except:
-                font = None
+            size = txtd['size']
+            font = get_truetype_font_with_size(txtd['font'], size)
             # if not font:
             #     continue
             text = txtd['text']
@@ -225,7 +224,7 @@ def create_image(data, file_getter=None, debug=False):
                         l += int((width - w) / 2)
                     elif align == 'right':
                         l = l + width - w
-                draw.text((l, t), txt, font=font, spacing=spacing, fill=txtd.get('color'))
+                draw.text((l, t), txt, font=font, spacing=spacing, fill=txtd.get('color', 'black'))
                 ih += h
 
             # 绘制文字
