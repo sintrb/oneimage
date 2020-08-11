@@ -4,7 +4,7 @@ Created on 2020-08-10
 '''
 from __future__ import print_function
 
-__version__ = '1.1.0'
+__version__ = '1.1.2'
 
 
 def _md5(s):
@@ -154,6 +154,15 @@ def create_image(data, file_getter=None, debug=False):
                 im = None
             if not im:
                 continue
+            if imgd.get('background'):
+                # 背景色
+                bg = Image.new("RGBA", im.size, imgd.get('background'))
+                if im.mode == 'RGBA':
+                    _, _, _, mask = im.split()
+                else:
+                    mask = None
+                bg.paste(im, (0, 0), mask=mask)
+                im = bg
             if im.mode not in ['RGBA']:
                 im = im.convert('RGBA')
             radius = imgd.get('radius')
