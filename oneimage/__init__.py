@@ -4,7 +4,7 @@ Created on 2020-08-10
 '''
 from __future__ import print_function
 
-__version__ = '1.1.2'
+__version__ = '1.2.0'
 
 
 def _md5(s):
@@ -33,6 +33,16 @@ def get_cached_file(url):
         with open(filepath, 'wb') as f:
             f.write(content)
     return filepath
+
+
+def try_get(d, k, df=None):
+    if k in d:
+        return d[k]
+    lk = k.replace('-', ' ').title().replace(' ', '')
+    lk = lk[0].lower() + lk[1:]
+    if lk in d:
+        return d[lk]
+    return df
 
 
 def create_image(data, file_getter=None, debug=False):
@@ -201,10 +211,10 @@ def create_image(data, file_getter=None, debug=False):
             if txtd.get('background'):
                 # 背景色
                 pd = txtd.get('padding', 0)
-                pl = txtd.get('padding-left', pd)
-                pr = txtd.get('padding-right', pd)
-                pt = txtd.get('padding-top', pd)
-                pb = txtd.get('padding-bottom', pd)
+                pl = try_get(txtd, 'padding-left', pd)  # txtd.get('padding-left', pd)
+                pr = try_get(txtd, 'padding-right', pd)  # txtd.get('padding-right', pd)
+                pt = try_get(txtd, 'padding-top', pd)  # txtd.get('padding-top', pd)
+                pb = try_get(txtd, 'padding-bottom', pd)  # txtd.get('padding-bottom', pd)
                 tw = tw + pl + pr
                 th = th + pt + pb
                 bg = Image.new("RGBA", (tw, th), txtd.get('background'))
@@ -237,9 +247,11 @@ def create_image(data, file_getter=None, debug=False):
                 ih += h
 
             # 绘制文字
-            if txtd.get('line-through'):
-                width = int(txtd.get('line-through', '1'))
+            if try_get(txtd, 'line-through'):  # txtd.get('line-through'):
+                width = int(int(try_get(txtd, 'line-through', '1')) * size / 8) or 1
                 draw.line([(tl, tt + th / 2 + width / 4), (tl + tw, tt + th / 2 + width / 4)], width=width, fill=txtd.get('color'))
+        else:
+            tl = tt = tw = th = 0
         if debug:
             draw.line([(tl, tt), (tl + tw - 1, tt), (tl + tw - 1, tt + th - 1), (tl, tt + th - 1), (tl, tt)], width=1, fill=debug)
     return img
